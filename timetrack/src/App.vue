@@ -6,7 +6,7 @@
     <router-view/>
 </template>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,10 +36,34 @@ html,body {
   display: block;
 }
 
+.container {
+  position: relative;
+  display: block;
+  max-width: 1100px;
+  width: 100%;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
 .divider {
   position: relative;
   display: block;
   width: 100%;
-  border-bottom: 1px solid $grey;
+}
+
+.btn {
+  position: relative;
+  display: block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 20px;
+  right: 0;
+  margin-top: 20px;
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: #e1e2e3;
+  }
 }
 </style>

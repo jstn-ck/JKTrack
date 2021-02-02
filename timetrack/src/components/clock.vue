@@ -1,26 +1,11 @@
 <template>
-  <div class="timetrack">
-    <h1>Hallo, {{ name }}</h1>
-    <Clock/>
-    <hr class="divider">
-    <div class="container">
-      <div class="active-projects">
-        <ActiveProjects/>
-      </div>
-    </div>
-  </div>
+	<span class="clock" v-text="day+'.' + month+'/' + hours+':' + minutes+':' + seconds" key="componentKey"></span>
 </template>
 
 <script>
-
-import ActiveProjects from "@/components/active-projects.vue"
-import Clock from "@/components/clock.vue"
-
 export default {
   data(){
     return {
-      name: localStorage.name,
-
       hours: 0,
       minutes: 0,
       seconds: 0,
@@ -69,28 +54,14 @@ export default {
       this.updateTime;
     }
   },
-
-  components: {
-    ActiveProjects,
-    Clock
-  }
 }
 </script>
-
 <style lang="scss" scoped>
-.timetrack {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  h1 {
-    font-size: 55px;
-  }
-
-  .active-projects {
-    padding: 20px;
-    margin: 10px 5px;
-  }
+.clock{
+	display: inline-block;
+	position: relative;
+	margin-left: auto;
+	font-size: 28px;
+	padding-top: 3%;
 }
-
 </style>
