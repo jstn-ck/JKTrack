@@ -39,7 +39,7 @@ html,body {
 .container {
   position: relative;
   display: block;
-  max-width: 1100px;
+  max-width: 1250px;
   width: 100%;
   margin-left: -15px;
   margin-right: -15px;

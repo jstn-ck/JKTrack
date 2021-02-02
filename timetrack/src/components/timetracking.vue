@@ -4,6 +4,7 @@
     <Clock/>
     <hr class="divider">
     <div class="container">
+      <Note/>
       <div class="active-projects">
         <ActiveProjects/>
       </div>
@@ -15,6 +16,7 @@
 
 import ActiveProjects from "@/components/active-projects.vue"
 import Clock from "@/components/clock.vue"
+import Note from "@/components/note.vue"
 
 export default {
   data(){
@@ -72,7 +74,8 @@ export default {
 
   components: {
     ActiveProjects,
-    Clock
+    Clock,
+    Note
   }
 }
 </script>
@@ -84,7 +87,7 @@ export default {
   justify-content: center;
 
   h1 {
-    font-size: 55px;
+    font-size: 65px;
   }
 
   .active-projects {
