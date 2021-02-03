@@ -35,16 +35,17 @@ data () {
 </script>
 <style scoped lang="scss">
 .note {
-	position: sticky;
+	position: fixed;
 	float: left;
-	display: block;
+	display: inline-block;
 	width: 100%;
 	max-width: 380px;
 	height: 100%;
 	max-height: 500px;
 	border: 5px solid $main;
 	padding: 20px;
-	margin: 20px 0;
+	left: 30px;
+	top: 140px;
 	overflow: hidden;
 
 	.note-toolbar {

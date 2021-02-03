@@ -59,9 +59,10 @@ export default {
 <style lang="scss" scoped>
 .clock{
 	display: inline-block;
-	position: relative;
+	position: absolute;
+  right: 10px;
+  bottom: 10px;
 	margin-left: auto;
 	font-size: 28px;
-	padding-top: 3%;
 }
 </style>

@@ -1,3 +1,12 @@
-$main: #b1d7e3;
-
+//Colors
+$main: #97a7bf;
 $grey: #ccc;
+
+//breakpoints
+$xs: 0;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$down: max-width;
+$up: min-width;
