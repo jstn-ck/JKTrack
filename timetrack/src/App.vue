@@ -26,7 +26,6 @@ html,body {
   font-size: 18px;
   height: 100vh;
   width: 100%;
-  overflow: hidden;
   margin: 0;
   padding: 15px;
 }
@@ -41,8 +40,6 @@ html,body {
   display: block;
   max-width: 1250px;
   width: 100%;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
 .divider {

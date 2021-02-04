@@ -8,9 +8,12 @@
 <style scoped lang="scss">
 
 .active-projects {
-	display: flex;
-	padding: 20px;
-	margin: 10px 5px;
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 40px;
+	border: 4px solid $main;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;

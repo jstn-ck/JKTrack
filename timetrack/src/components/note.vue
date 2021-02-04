@@ -1,17 +1,17 @@
 <template>
 	<div class="note">
 		<h4 class="note-title">Notizen</h4>
-		<div class="note-toolbar">
+		<div class="note-tabs">
 			<ul>
-				<li>Test1</li>
-				<li>test2</li>
+				<li class="tab"></li>
 			</ul>
+			<button class="new-note-tab"></button>
 		</div>
-
-		<form autocomplete="off" class="note-form">
+		<div class="form-container">
+			<form autocomplete="off" class="note-form">
 			<textarea v-model="notes" name="note-area" id="note-area">{{ notes }}</textarea>
 		</form>
-		
+		</div>
 	</div>
 </template>
 <script>
@@ -35,26 +35,60 @@ data () {
 </script>
 <style scoped lang="scss">
 .note {
-	position: fixed;
-	float: left;
+	position: relative;
 	display: inline-block;
 	width: 100%;
 	max-width: 380px;
 	height: 100%;
-	max-height: 500px;
-	border: 5px solid $main;
+	border: 3px solid $main;
 	padding: 20px;
-	left: 30px;
-	top: 140px;
+	margin-top: 20px;
 	overflow: hidden;
+	box-shadow: $shadow;
+	order: 1;
 
-	.note-toolbar {
+	.form-container {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.note-tabs {
 		font-size: 14px;
 		display: inline-block;
 		margin-left: 0.4rem;
+		position: relative;
+
+		.new-note-tab {
+			display: inline-block;
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			top: 2px;
+			border: 0;
+			outline: 0;
+			cursor: pointer;
+			background-color: #fff;
+
+			&::before,&::after {
+				content: '';
+				position: absolute;
+				width: 2px;
+				top: 0;
+				height: 14px;
+				background-color: $second;
+			}
+
+			&::after {
+				width: 14px;
+				height: 2px;
+				transform: translate3d(-6px, 6px, 0px);
+			}
+		}
 
 		ul {
-			display: block;
+			display: inline-block;
 
 			li {
 				display: inline-block;

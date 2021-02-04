@@ -2,7 +2,7 @@
   <div class="timetrack">
     <Note/>
     <div class="container">
-      <div class="active-projects">
+      <div class="projects">
         <ActiveProjects/>
       </div>
     </div>
@@ -25,12 +25,11 @@ export default {
 <style lang="scss" scoped>
 .timetrack {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 
-  .active-projects {
-    padding: 20px;
-    margin: 10px 5px;
+  .projects {
+    margin: 20px 20px 0 0;
+    height: 100%;
   }
 }
 

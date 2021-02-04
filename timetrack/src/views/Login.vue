@@ -3,8 +3,8 @@
 		<div class="login">
 			<h1>Login</h1>
 			<div class="login-group">
-				<input v-model="name" type="text" placeholder="Name">
-				<router-link to="/Timetrack"><button class="login-btn">Enter</button></router-link>
+				<input v-on:keyup.enter="login" v-model="name" type="text" placeholder="Name">
+				<router-link to="/Timetrack"><button ref="loginbtn" class="login-btn">Enter</button></router-link>
 			</div>
 		</div>
 	</div>
@@ -27,12 +27,18 @@ data () {
     name(newName) {
       localStorage.name = newName;
     }
+  },
+
+  methods: {
+  	login: function() {
+  		const lgBtn = this.$refs.loginbtn;
+  		lgBtn.click();
+  	}
   }
 };
 </script>
 
 <style scoped lang="scss">
-@import "@/scss/_variables.scss";
 
 .login-form {
 	position: relative;
