@@ -27,7 +27,7 @@ header {
 	height: 90px;
 	display: flex;
 	justify-content: space-between;
-	box-shadow: 0px 0px 9px 3px $grey;
+	border-bottom: 2px solid $grey;
 
 	h1 {
 		font-size: 65px;
