@@ -2,10 +2,11 @@
 	<div class="note">
 		<h4 class="note-title">Notizen</h4>
 		<div class="note-tabs">
-			<ul>
-				<li class="tab"></li>
+			<ul class="tablist">
+				<li v-for="(tab, index) in tabs"
+						 :key="index" class="tab">Tab{{ tabcount }}</li>
 			</ul>
-			<button class="new-note-tab"></button>
+			<button ref="newtab" @click="addtab" class="new-note-tab"></button>
 		</div>
 		<div class="form-container">
 			<form autocomplete="off" class="note-form">
@@ -18,19 +19,37 @@
 export default {
 data () {
     return {
-		notes: ''
+		notes: '',
+		tabcount: 1,
+		tab: ''
     }
   },
   mounted() {
     if (localStorage.notes) {
       	this.notes = localStorage.notes;
     }
+    if (localStorage.tab) {
+      	this.tab = localStorage.tab;
+    }
   },
-  	watch: {
-   		notes(newNote) {
-      		localStorage.notes = newNote;
-    	}
-  	}
+  watch: {
+	notes(newNote) {
+  		localStorage.notes = newNote;
+	}
+  },
+  methods: {
+	tabbing() {
+		const tab = '';
+		function addtab () {
+			if (tab.value) {
+				tab.value.push({
+					content: tab.value
+				});
+				tab.value = '';
+			}
+		}
+	}
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -87,8 +106,19 @@ data () {
 			}
 		}
 
-		ul {
+		ul.tablist {
 			display: inline-block;
+			list-style: none;
+
+			.tab {
+				display: inline-block;
+				cursor: pointer;
+				transition: 0.3s ease;
+
+				&:hover {
+					color: lighten($grey,0.4);
+				}
+			}
 
 			li {
 				display: inline-block;
@@ -115,7 +145,7 @@ data () {
 		outline: 0;
 		margin-top: 10px;
 		padding-top: 15px;
-		border-top: 1px solid $grey;
+		border-top: 2px solid $lightblue;
 		font-size: 20px;
 		text-decoration: none;
 	}
