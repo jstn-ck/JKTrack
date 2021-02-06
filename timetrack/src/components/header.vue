@@ -11,7 +11,7 @@ import Clock from "@/components/clock.vue"
 export default {
 data(){
 	return {
-  		name: localStorage.name,
+		name: localStorage.name,
 	};
 },
 components: {

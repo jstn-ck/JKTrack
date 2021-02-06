@@ -30,10 +30,10 @@ data () {
   },
 
   methods: {
-  	login: function() {
-  		const lgBtn = this.$refs.loginbtn;
-  		lgBtn.click();
-  	}
+	login: function() {
+		const lgBtn = this.$refs.loginbtn;
+		lgBtn.click();
+	}
   }
 };
 </script>
@@ -74,7 +74,7 @@ data () {
 			font-size: 17px;
 
 			&:focus {
-				box-shadow: 0px 1px 0px 0px $main;
+				box-shadow: 0px 1px 0px 0px $lightblue;
 			}
 		}
 

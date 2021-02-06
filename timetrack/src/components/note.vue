@@ -3,53 +3,69 @@
 		<h4 class="note-title">Notizen</h4>
 		<div class="note-tabs">
 			<ul class="tablist">
-				<li v-for="(tab, index) in tabs"
-						 :key="index" class="tab">Tab{{ tabcount }}</li>
+				<li v-for="note in notes" :key="note.id" @click="() => activateNote(note.id)" :class="{active: note.id === activeId}" class="tab">{{ note.title }}</li>
 			</ul>
-			<button ref="newtab" @click="addtab" class="new-note-tab"></button>
+			<button @click="addNote" class="new-note-tab"></button>
 		</div>
 		<div class="form-container">
 			<form autocomplete="off" class="note-form">
-			<textarea v-model="notes" name="note-area" id="note-area">{{ notes }}</textarea>
+			<textarea :value="activeNote?.content" name="note-area" @input="$event => handleChange($event)" id="note-area"></textarea>
 		</form>
 		</div>
 	</div>
 </template>
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
 data () {
-    return {
-		notes: '',
-		tabcount: 1,
-		tab: ''
-    }
-  },
-  mounted() {
-    if (localStorage.notes) {
-      	this.notes = localStorage.notes;
-    }
-    if (localStorage.tab) {
-      	this.tab = localStorage.tab;
-    }
-  },
-  watch: {
-	notes(newNote) {
-  		localStorage.notes = newNote;
-	}
-  },
-  methods: {
-	tabbing() {
-		const tab = '';
-		function addtab () {
-			if (tab.value) {
-				tab.value.push({
-					content: tab.value
-				});
-				tab.value = '';
+		return {
+			notes: [],
+			activeId: null
+		}
+	},
+
+	computed: {
+		activeNote() {
+			return this.notes.find(note => note.id === this.activeId);
+		}
+	},
+
+	mounted() {
+		if (localStorage.getItem('notes')) {
+			try {
+				this.notes = JSON.parse(localStorage.getItem('notes'));
+				this.activeId = this.notes[0].id;
+			} catch(e) {
+				localStorage.removeItem('notes');
 			}
 		}
+	},
+
+	methods: {
+		addNote() {
+			let id = uuidv4();
+			this.notes.push({
+				title: "Test",
+				id: id,
+				content: ''
+			})
+			this.activateNote(id)
+			this.saveNote();
+		},
+		activateNote(id) {
+			this.activeId = id;
+		},
+		handleChange($event) {
+			this.activeNote.content = $event.target.value;
+			this.saveNote();
+			console.log(this.notes)
+		},
+		saveNote() {
+			const parsed = JSON.stringify(this.notes);
+			localStorage.setItem('notes', parsed);
+		}
 	}
-  }
 };
 </script>
 <style scoped lang="scss">
@@ -115,6 +131,10 @@ data () {
 				cursor: pointer;
 				transition: 0.3s ease;
 
+				&.active {
+					color: green;
+				}
+
 				&:hover {
 					color: lighten($grey,0.4);
 				}
@@ -138,7 +158,7 @@ data () {
 		resize: none;
 		position: relative;
 		display: inline-block;
-	  	width: 100%;
+		width: 100%;
 		height: 450px;
 		box-sizing: border-box;
 		border: 0;

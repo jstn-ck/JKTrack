@@ -31,7 +31,7 @@ export default {
   methods: {
     updateTime() {
       function leadingZero(t) {
-      if(t < 10) {
+      if(t < 10) {
         return '0' + t;
       }
       else {
