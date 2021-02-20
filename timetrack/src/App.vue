@@ -41,28 +41,30 @@ html,body {
 }
 
 .container {
-  position: relative;
-  display: block;
-  max-width: 1250px;
-  width: 100%;
+	position: relative;
+	display: block;
+	max-width: 1250px;
+
+	width: 100%;
+	height: 100%;
 }
 
 .divider {
-  position: relative;
-  display: block;
-  width: 100%;
+	position: relative;
+	display: block;
+	width: 100%;
 }
 
 .btn {
-  position: relative;
-  display: block;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  padding: 10px 20px;
-  right: 0;
-  margin-top: 20px;
-  transition: 0.3s ease;
+	position: relative;
+	display: block;
+	outline: 0;
+	border: 0;
+	cursor: pointer;
+	padding: 10px 20px;
+	right: 0;
+	margin-top: 20px;
+	transition: 0.3s ease;
 
   &:hover {
     background-color: #e1e2e3;
