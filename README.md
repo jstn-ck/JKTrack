@@ -1,2 +1,4 @@
 # JKTrack
-Time Tracking Tool
+Time Tracking Tool built in Vue
+
+
