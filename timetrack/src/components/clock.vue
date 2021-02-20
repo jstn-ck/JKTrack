@@ -45,7 +45,7 @@ export default {
       this.minutes = leadingZero(date.getMinutes());
       this.seconds = leadingZero(date.getSeconds());
       this.day = date.getDay();
-      this.month = monthNames[date.getMonth()]; 
+      this.month = monthNames[date.getMonth()];
       this.$options.timer = window.setTimeout(this.updateTime, 1000);
     },
 
@@ -60,8 +60,8 @@ export default {
 .clock{
 	display: inline-block;
 	position: absolute;
-  right: 10px;
-  bottom: 10px;
+	right: 10px;
+	bottom: 10px;
 	margin-left: auto;
 	font-size: 28px;
 }

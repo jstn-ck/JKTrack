@@ -1,6 +1,9 @@
 <template>
 	<div class="note">
-		<button class="note-settings"></button>
+		<div :class="{open: isOpen}" class="note-settings">
+			<button @click="openSettings" class="open-settings">s</button>
+			<button @click="deleteNote" class="delete-note">Löschen</button>
+		</div>
 		<h4 class="note-title">Notizen</h4>
 		<div class="note-tabs">
 			<ul class="tablist">
@@ -18,12 +21,15 @@
 <script>
 import { v4 as uuidv4 } from 'uuid';
 
+var nbtn = document.getElementsByClassName("new-note-tab");
+
 export default {
 data () {
 		return {
 			notes: [],
 			activeId: null,
 			tabCount: 0,
+			isOpen: false,
 		}
 	},
 
@@ -49,9 +55,11 @@ data () {
 			var tabCount = Object.keys(this.notes).length
 			if(tabCount <= 6) {
 				this.addNote();
+				if(tabCount <= 6) {
+					nbtn[0].classList.add('hidden');
+				}
 			} else {
-				alert('Tab limit erreicht');
-				return;
+				nbtn[0].classList.add('hidden');
 			}
 		},
 		addNote() {
@@ -64,6 +72,17 @@ data () {
 			this.activateNote(id);
 			this.saveNote();
 		},
+		deleteNote() {
+			this.isOpen = false;
+
+			if(this.activeNote !== undefined) {
+				const noteIndex = this.notes.indexOf(this.activeNote);
+				this.notes.splice(noteIndex, 1);
+				this.saveNote();
+				nbtn[0].classList.remove('hidden');
+			}
+		},
+
 		activateNote(id) {
 			this.activeId = id;
 		},
@@ -74,11 +93,23 @@ data () {
 		saveNote() {
 			const parsed = JSON.stringify(this.notes);
 			localStorage.setItem('notes', parsed);
+		},
+
+		openSettings() {
+			this.isOpen = !this.isOpen;
 		}
 	}
 };
 </script>
 <style scoped lang="scss">
+button {
+	border: 0;
+	outline: 0;
+}
+
+.hidden {
+	display: none !important;
+}
 .note {
 	position: relative;
 	display: inline-block;
@@ -95,22 +126,54 @@ data () {
 	.note-settings {
 		display: inline-block;
 		position: absolute;
-		width: 20px;
-		height: 20px;
+		min-width: 20px;
+		height: 30px;
 		top: 30%;
-		right: 15px;
+		right: 0;
 		border: 0;
 		outline: 0;
-		cursor: pointer;
-		background-color: #fff;
+		background-color: $white;
+		z-index: 999;
+		transition: 0.3s ease;
 
-		&::before {
-			content: '';
+		.open-settings {
 			position: absolute;
-			width: 55px;
-			top: 0;
-			height: 34px;
 			background-color: $lightblue;
+			top: 0;
+			left: 0;
+			min-width: 20px;
+			color: $white;
+			height: 28px;
+			cursor: pointer;
+		}
+
+		.delete-note {
+			margin-left: 50px;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			outline: 0;
+			cursor: pointer;
+			background-color: transparent;
+			transition: 0.35s ease;
+			border: 0;
+			opacity: 0;
+
+			&:hover {
+				display: inline-block;
+				color: red;
+			}
+		}
+
+		&.open {
+			min-width: 130px;
+			max-height: 34px;
+			border: 1px solid $lightblue;
+			border-right: 0;
+
+			.delete-note {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -137,6 +200,12 @@ data () {
 			outline: 0;
 			cursor: pointer;
 			background-color: #fff;
+
+			&:disabled {
+				&::before,&::after {
+					background-color: lightgrey;
+				}
+			}
 
 			&::before,&::after {
 				content: '';

@@ -25,7 +25,6 @@ export default {
 <style lang="scss" scoped>
 .timetrack {
   display: flex;
-  justify-content: center;
 
   .projects {
     margin: 20px 20px 0 0;
