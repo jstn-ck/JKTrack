@@ -28,6 +28,9 @@ export default {
 
   .projects {
     margin: 20px 20px 0 0;
+		min-height: 700px;
+		border: 3px solid $main;
+		padding: 30px;
   }
 }
 

@@ -1,8 +1,10 @@
 <template>
 	<div class="note">
+		<div class="overlay-window"></div>
 		<div :class="{open: isOpen}" class="note-settings">
 			<button @click="openSettings" class="open-settings">s</button>
 			<button @click="deleteNote" class="delete-note">Löschen</button>
+			<button @click="deleteAll" class="delete-all">Alles Löschen</button>
 		</div>
 		<h4 class="note-title">Notizen</h4>
 		<div class="note-tabs">
@@ -55,7 +57,7 @@ data () {
 			var tabCount = Object.keys(this.notes).length
 			if(tabCount <= 6) {
 				this.addNote();
-				if(tabCount <= 6) {
+				if(tabCount >= 6) {
 					nbtn[0].classList.add('hidden');
 				}
 			} else {
@@ -81,6 +83,14 @@ data () {
 				this.saveNote();
 				nbtn[0].classList.remove('hidden');
 			}
+		},
+
+		deleteAll() {
+			this.isOpen = false;
+			const parsed = JSON.stringify(this.notes);
+			localStorage.removeItem('notes', parsed);
+			this.notes = [];
+			this.saveNote();
 		},
 
 		activateNote(id) {
@@ -147,8 +157,8 @@ button {
 			cursor: pointer;
 		}
 
-		.delete-note {
-			margin-left: 50px;
+		.delete-note,.delete-all {
+			margin-left: 30px;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
@@ -157,6 +167,7 @@ button {
 			background-color: transparent;
 			transition: 0.35s ease;
 			border: 0;
+			display: none;
 			opacity: 0;
 
 			&:hover {
@@ -165,14 +176,21 @@ button {
 			}
 		}
 
+		.delete-all {
+			position: absolute;
+			right: 8px;
+
+		}
+
 		&.open {
-			min-width: 130px;
+			min-width: 200px;
 			max-height: 34px;
 			border: 1px solid $lightblue;
 			border-right: 0;
 
-			.delete-note {
+			.delete-note,.delete-all {
 				opacity: 1;
+				display: inline-block;
 			}
 		}
 	}

@@ -44,7 +44,6 @@ html,body {
 	position: relative;
 	display: block;
 	max-width: 1250px;
-
 	width: 100%;
 	height: 100%;
 }

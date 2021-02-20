@@ -12,10 +12,5 @@
 	display: block;
 	width: 100%;
 	height: 100%;
-	padding: 40px;
-	border: 4px solid $main;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 </style>
