@@ -1,11 +1,12 @@
 <template>
 	<div class="note">
+		<button class="note-settings"></button>
 		<h4 class="note-title">Notizen</h4>
 		<div class="note-tabs">
 			<ul class="tablist">
 				<li v-for="note in notes" :key="note.id" @click="() => activateNote(note.id)" :class="{active: note.id === activeId}" class="tab">{{ note.title }}</li>
 			</ul>
-			<button @click="addNote" class="new-note-tab"></button>
+			<button @click="limitTabs" class="new-note-tab"></button>
 		</div>
 		<div class="form-container">
 			<form autocomplete="off" class="note-form">
@@ -21,7 +22,8 @@ export default {
 data () {
 		return {
 			notes: [],
-			activeId: null
+			activeId: null,
+			tabCount: 0,
 		}
 	},
 
@@ -43,6 +45,15 @@ data () {
 	},
 
 	methods: {
+		limitTabs() {
+			var tabCount = Object.keys(this.notes).length
+			if(tabCount <= 6) {
+				this.addNote();
+			} else {
+				alert('Tab limit erreicht');
+				return;
+			}
+		},
 		addNote() {
 			let id = uuidv4();
 			this.notes.push({
@@ -50,7 +61,7 @@ data () {
 				id: id,
 				content: ''
 			})
-			this.activateNote(id)
+			this.activateNote(id);
 			this.saveNote();
 		},
 		activateNote(id) {
@@ -59,7 +70,6 @@ data () {
 		handleChange($event) {
 			this.activeNote.content = $event.target.value;
 			this.saveNote();
-			console.log(this.notes)
 		},
 		saveNote() {
 			const parsed = JSON.stringify(this.notes);
@@ -81,6 +91,28 @@ data () {
 	overflow: hidden;
 	box-shadow: $shadow;
 	order: 1;
+
+	.note-settings {
+		display: inline-block;
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		top: 30%;
+		right: 15px;
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+		background-color: #fff;
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 55px;
+			top: 0;
+			height: 34px;
+			background-color: $lightblue;
+		}
+	}
 
 	.form-container {
 		position: relative;
@@ -130,9 +162,31 @@ data () {
 				display: inline-block;
 				cursor: pointer;
 				transition: 0.3s ease;
+				position: relative;
+
+				&::before{
+					transition: 0.3s ease;
+					content: '';
+					position: absolute;
+					background-color: $lightblue;
+					bottom: -18px;
+					left: 0;
+					width: 100%;
+					height: 0;
+					z-index: -1;
+				}
 
 				&.active {
-					color: green;
+					color: $white;
+					font-weight: 600;
+					&::before {
+						height: 40px;
+						box-shadow: 50px 50px 0px -30px $lightblue;
+					}
+
+					&:hover {
+						color: $white;
+					}
 				}
 
 				&:hover {
