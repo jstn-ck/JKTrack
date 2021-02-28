@@ -4,7 +4,7 @@
 			<h1>Login</h1>
 			<div class="login-group">
 				<input v-on:keyup.enter="login" v-model="name" type="text" placeholder="Name">
-				<router-link to="/Timetrack"><button ref="loginbtn" class="login-btn">Enter</button></router-link>
+				<router-link to="/Timetrack"><button ref="loginbtn" class="login-btn">Login</button></router-link>
 			</div>
 		</div>
 	</div>

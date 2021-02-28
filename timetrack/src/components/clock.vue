@@ -1,5 +1,5 @@
 <template>
-	<span class="clock" v-text="day+'.' + month+'/' + hours+':' + minutes+':' + seconds" key="componentKey"></span>
+	<span class="clock" v-text="dayName+' ' + day+'.' + month+'/' + hours+':' + minutes+':' + seconds"></span>
 </template>
 
 <script>
@@ -11,8 +11,7 @@ export default {
       seconds: 0,
       month: '',
       day: '',
-      //FastRender Clock
-      componentKey: 0
+			dayName: '',
     };
   },
 
@@ -39,27 +38,26 @@ export default {
       }
     }
       const date = new Date();
+      const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
       const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni",
         "Juli", "August", "September", "Oktober", "November", "Dezember" ];
       this.hours = leadingZero(date.getHours());
       this.minutes = leadingZero(date.getMinutes());
       this.seconds = leadingZero(date.getSeconds());
-      this.day = date.getDay();
+      this.day = date.getDate();
+      const dayIndex = date.getDay() + 6;
+			this.dayName = dayNames[dayIndex];
       this.month = monthNames[date.getMonth()];
       this.$options.timer = window.setTimeout(this.updateTime, 1000);
     },
-
-    forceRerender() {
-      this.componentKey += 1;
-      this.updateTime;
-    }
   },
 }
 </script>
 <style lang="scss" scoped>
 .clock{
 	display: inline-block;
-	position: absolute;
+	position: relative;
+	margin-top: auto;
 	right: 10px;
 	bottom: 10px;
 	margin-left: auto;

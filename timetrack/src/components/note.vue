@@ -1,8 +1,14 @@
 <template>
 	<div class="note">
-		<div class="overlay-window"></div>
+		<div class="overlay">
+			<div class="overlay-window">
+				<h3>Titel Wählen:</h3>
+				<input class="tab-title" type="text" placeholder="Titel">
+				<button class="save-tab btn">Hinzufügen</button>
+			</div>
+		</div>
 		<div :class="{open: isOpen}" class="note-settings">
-			<button @click="openSettings" class="open-settings">s</button>
+			<button @click="openSettings" class="open-settings"></button>
 			<button @click="deleteNote" class="delete-note">Löschen</button>
 			<button @click="deleteAll" class="delete-all">Alles Löschen</button>
 		</div>
@@ -11,7 +17,7 @@
 			<ul class="tablist">
 				<li v-for="note in notes" :key="note.id" @click="() => activateNote(note.id)" :class="{active: note.id === activeId}" class="tab">{{ note.title }}</li>
 			</ul>
-			<button @click="limitTabs" class="new-note-tab"></button>
+			<button @click="limitTabs" :class="{hidden: hidden}" class="new-note-tab"></button>
 		</div>
 		<div class="form-container">
 			<form autocomplete="off" class="note-form">
@@ -30,10 +36,10 @@ data () {
 		return {
 			notes: [],
 			activeId: null,
-			tabCount: 0,
 			isOpen: false,
+			hidden: false,
 		}
-	},
+},
 
 	computed: {
 		activeNote() {
@@ -55,21 +61,21 @@ data () {
 	methods: {
 		limitTabs() {
 			var tabCount = Object.keys(this.notes).length
-			if(tabCount <= 6) {
+			if(tabCount <= 9) {
 				this.addNote();
-				if(tabCount >= 6) {
-					nbtn[0].classList.add('hidden');
+				if(tabCount >= 9) {
+					this.hidden = true;
 				}
 			} else {
-				nbtn[0].classList.add('hidden');
+				this.hidden = true;
 			}
 		},
 		addNote() {
 			let id = uuidv4();
 			this.notes.push({
-				title: "Test",
+				title: "Tab",
 				id: id,
-				content: ''
+				content: '',
 			})
 			this.activateNote(id);
 			this.saveNote();
@@ -81,12 +87,13 @@ data () {
 				const noteIndex = this.notes.indexOf(this.activeNote);
 				this.notes.splice(noteIndex, 1);
 				this.saveNote();
-				nbtn[0].classList.remove('hidden');
+				this.hidden = false;
 			}
 		},
 
 		deleteAll() {
 			this.isOpen = false;
+			nbtn[0].classList.remove('hidden');
 			const parsed = JSON.stringify(this.notes);
 			localStorage.removeItem('notes', parsed);
 			this.notes = [];
@@ -111,6 +118,7 @@ data () {
 	}
 };
 </script>
+
 <style scoped lang="scss">
 button {
 	border: 0;
@@ -120,11 +128,84 @@ button {
 .hidden {
 	display: none !important;
 }
+
+.overlay {
+	position: fixed;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba($main, 0.19);
+	z-index: 9999;
+	visibility: hidden;
+	opacity: 0;
+
+	.overlay-window {
+		display: block;
+		position: relative;
+		min-width: 500px;
+		min-height: 400px;
+		padding: calc(1.5rem + 45px) 15px;
+		background-color: $white;
+		border-radius: 15px;
+		box-shadow: 3px 3px 0 3px $lightblue;
+
+		.save-tab {
+			position: relative;
+			display: block;
+			background-color: $lightblue;
+			color: $white;
+			max-width: 100%;
+			margin-left: auto;
+			transition: 0.3s ease;
+
+			&:hover {
+				background-color: lighten($lightblue, 10);
+			}
+		}
+
+		input.tab-title {
+			border: 1px solid rgba($lightblue, 0.2);
+			outline: 0;
+			padding: 15px 10px;
+			width: 100%;
+			font-size: 27px;
+			transition: 0.2s ease-in;
+
+			&:focus {
+				border: 1px solid rgba($lightblue, 1);
+			}
+		}
+
+		h3 {
+			color: $main;
+			padding: 10px 0;
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 45px;
+			background-color: $lightblue;
+			z-index: 99999;
+			border-top-left-radius: 15px;
+			border-top-right-radius: 15px;
+		}
+	}
+}
+
 .note {
 	position: relative;
 	display: inline-block;
 	width: 100%;
-	max-width: 380px;
+	max-width: 450px;
 	height: 100%;
 	border: 3px solid $main;
 	padding: 20px;
@@ -132,17 +213,18 @@ button {
 	overflow: hidden;
 	box-shadow: $shadow;
 	order: 1;
+	transition: 0.3s ease;
 
 	.note-settings {
 		display: inline-block;
 		position: absolute;
 		min-width: 20px;
-		height: 30px;
+		height: 35px;
 		top: 30%;
 		right: 0;
 		border: 0;
 		outline: 0;
-		background-color: $white;
+		background-color: $lightblue;
 		z-index: 999;
 		transition: 0.3s ease;
 
@@ -151,10 +233,14 @@ button {
 			background-color: $lightblue;
 			top: 0;
 			left: 0;
-			min-width: 20px;
+			min-width: 22px;
 			color: $white;
-			height: 28px;
+			height: 33px;
 			cursor: pointer;
+			background-image: url("../../src/assets/trash.svg");
+			background-repeat: no-repeat;
+			background-size: 80%;
+			background-position: center center;
 		}
 
 		.delete-note,.delete-all {
@@ -166,13 +252,14 @@ button {
 			cursor: pointer;
 			background-color: transparent;
 			transition: 0.35s ease;
+			color: $white;
 			border: 0;
 			display: none;
 			opacity: 0;
 
 			&:hover {
 				display: inline-block;
-				color: red;
+				color: lightcoral;
 			}
 		}
 
@@ -187,6 +274,10 @@ button {
 			max-height: 34px;
 			border: 1px solid $lightblue;
 			border-right: 0;
+
+			.open-settings {
+				border-right: 1px solid $white;
+			}
 
 			.delete-note,.delete-all {
 				opacity: 1;
@@ -219,12 +310,6 @@ button {
 			cursor: pointer;
 			background-color: #fff;
 
-			&:disabled {
-				&::before,&::after {
-					background-color: lightgrey;
-				}
-			}
-
 			&::before,&::after {
 				content: '';
 				position: absolute;
@@ -244,12 +329,13 @@ button {
 		ul.tablist {
 			display: inline-block;
 			list-style: none;
+			position: relative;
 
 			.tab {
-				display: inline-block;
 				cursor: pointer;
 				transition: 0.3s ease;
 				position: relative;
+				width: 30px;
 
 				&::before{
 					transition: 0.3s ease;
@@ -259,13 +345,14 @@ button {
 					bottom: -18px;
 					left: 0;
 					width: 100%;
-					height: 0;
+					height: 1px;
 					z-index: -1;
 				}
 
 				&.active {
 					color: $white;
 					font-weight: 600;
+
 					&::before {
 						height: 40px;
 						box-shadow: 50px 50px 0px -30px $lightblue;
