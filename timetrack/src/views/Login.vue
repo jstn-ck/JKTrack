@@ -15,13 +15,16 @@
 export default {
 data () {
     return {
-		name: ''
+			name: ''
     }
   },
   mounted() {
     if (localStorage.name) {
       this.name = localStorage.name;
     }
+		setTimeout(() => {
+			this.isLoading = false
+		}, 2000)
   },
   watch: {
     name(newName) {

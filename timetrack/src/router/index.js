@@ -11,7 +11,13 @@ const routes = [
     path: '/timetrack',
     name: 'Timetrack',
     component: () => import(/* webpackChunkName: "about" */ '../views/Timetrack.vue')
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: () => import(/* webpackChunkName: "about" */ '../views/History.vue')
   }
+
 ]
 
 const router = createRouter({

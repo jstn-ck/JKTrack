@@ -38,15 +38,14 @@ export default {
       }
     }
       const date = new Date();
-      const dayNames = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+      const dayNames = ["So","Mo", "Di", "Mi", "Do", "Fr", "Sa"];
       const monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni",
         "Juli", "August", "September", "Oktober", "November", "Dezember" ];
       this.hours = leadingZero(date.getHours());
       this.minutes = leadingZero(date.getMinutes());
       this.seconds = leadingZero(date.getSeconds());
       this.day = date.getDate();
-      const dayIndex = date.getDay() + 6;
-			this.dayName = dayNames[dayIndex];
+			this.dayName = dayNames[date.getDay()];
       this.month = monthNames[date.getMonth()];
       this.$options.timer = window.setTimeout(this.updateTime, 1000);
     },

@@ -1,6 +1,12 @@
 <template>
 	<header>
 		<h1>User: {{ name }}</h1>
+    <div class="nav">
+      <ul>
+        <li>Timetracking</li>
+        <li>History</li>
+      </ul>
+    </div>
 		<Clock/>
 	</header>
 </template>
@@ -31,24 +37,26 @@ header {
 
 	h1 {
 		font-size: 65px;
-
-		&::before,&::after {
-			content: '';
-			position: relative;
-			display: inline-block;
-			width: 4px;
-			top: 0;
-			right: 0;
-			height: 14px;
-			background-color: $main;
-		}
-
-		&::after {
-			width: 14px;
-			height: 4px;
-			transform: translate3d(-6px, 6px, 0px);
-		}
 	}
+
+  .nav {
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+
+    ul {
+      display: block;
+      list-style: none;
+
+      li {
+        display: inline-block;
+        padding: 0.3em;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 </style>
