@@ -270,7 +270,7 @@ button {
 					content: '';
 					position: absolute;
 					background-color: $lightblue;
-					bottom: -18px;
+					bottom: -13px;
 					left: 0;
 					width: 100%;
 					height: 1px;
@@ -282,7 +282,7 @@ button {
 					font-weight: 600;
 
 					&::before {
-						height: 40px;
+						height: 35px;
 						box-shadow: 50px 50px 0px -30px $lightblue;
 					}
 
@@ -322,6 +322,7 @@ button {
 		margin-top: 10px;
 		padding-top: 15px;
 		border-top: 2px solid $lightblue;
+		background-color: rgba(209, 209, 209, 0.2);
 		font-size: 20px;
 		text-decoration: none;
 	}

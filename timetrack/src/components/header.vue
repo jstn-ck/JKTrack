@@ -3,8 +3,8 @@
 		<h1>User: {{ name }}</h1>
     <div class="nav">
       <ul>
-        <li>Timetracking</li>
-        <li>History</li>
+        <li><router-link to="/Timetrack">Timetracking</router-link></li>
+        <li><router-link to="/History">History</router-link></li>
       </ul>
     </div>
 		<Clock/>
@@ -42,18 +42,28 @@ header {
   .nav {
     position: relative;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
+		margin: auto auto 20px;
 
     ul {
       display: block;
       list-style: none;
+			text-decoration: none;
 
       li {
         display: inline-block;
-        padding: 0.3em;
         cursor: pointer;
+				margin-right: 10px;
+
+				a {
+					color: #fff;
+					text-decoration: none;
+					padding: 0.7em;
+					background-color: $lightblue;
+
+					&.is-active {
+						background-color: darken($lightblue, 25px);
+					}
+				}
       }
     }
   }

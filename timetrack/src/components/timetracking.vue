@@ -23,10 +23,11 @@
 				<div class="task" v-for="task in tasks" :key="task.id">
 					<h3 class="task-title">{{ task.title }}</h3>
           <hr class="divider"/>
-          <div class="timers">
-            <button @click="start-timer" class="start-timer btn">s</button> 			  
-            <button @click="pause-timer" class="pause-timer btn">p</button> 
-            <button @click="end-timer" class="end-timer btn">e</button> 
+					<div v-bind="timer" class="timer">{{ task.hours }}:{{ task.minutes }}:{{ task.seconds }}</div>
+          <div class="timer-options">
+            <button @click="startTimer" class="start-timer btn">s</button>
+            <button @click="pauseTimer" class="pause-timer btn">p</button>
+            <button @click="endTimer" class="end-timer btn">e</button>
           </div>
         </div>
       </div>
@@ -75,6 +76,9 @@ export default {
 					this.tasks.push({
 						title: this.taskTitle,
 						id: id,
+						minutes: 0,
+						hours: 0,
+						seconds: 0,
 					})
 				ov[0].classList.remove('active');
 				this.saveTask();
@@ -84,6 +88,27 @@ export default {
 			const parsed = JSON.stringify(this.tasks);
 			localStorage.setItem('tasks', parsed);
 		},
+		startTimer() {
+			setTimeout(function() {
+				this.tasks.hours++;
+			}, 1);
+		},
+		pauseTimer() {
+			return;
+		},
+		endTimer() {
+			return;
+		},
+	},
+
+	computed: {
+		timer() {
+			var hours = 0;
+			var minutes = 0;
+			var seconds = 0;
+
+			return seconds+hours+minutes;
+		}
 	},
 
 	mounted() {
@@ -107,6 +132,13 @@ export default {
 }
 .leaveAnim-enter, .leaveAnim-leave-to {
 	opacity: 0;
+}
+
+.timer {
+	position: relative;
+	display: block;
+	color: black;
+	min-height: 30px;
 }
 
 .timetrack {
@@ -365,23 +397,24 @@ export default {
       position: relative;
 			max-width: 400px;
 			min-height: 300px;
+			height: 100%;
 			margin: 0.5em 1.3em;
 			width: 100%;
 			flex: 1 1 50%;
 			border: 3px solid $main;
 			padding: 1.3em;
-      
-               .divider {
-                 margin-top: 50px;
-               }
 
-               .timers {
-                 position: absolute;
-                 display: flex;
-                 bottom: 0;
-                 left: 0;
-                 width: 100%;
-               }
+			.divider {
+				margin-top: 50px;
+			}
+
+			.timer-options {
+				display: flex;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+			}
 
         .start-timer,.pause-timer,.end-timer {
           position: relative;
@@ -414,6 +447,7 @@ export default {
 
 			h3 {
 				font-size: 34px;
+				word-break: break-word;
 			}
 		}
   }
